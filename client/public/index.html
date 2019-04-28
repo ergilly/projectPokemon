@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Project Pokemon</title>
+  <link rel="stylesheet" href="stylesheets/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="js/bundle.js"></script>
+</head>
+
+<body>
+  <div class="ui container left-padding top-padding">
+    <h1>Pokémon</h1>
+    <form class="ui form" id="pokemon-form">
+
+      <div class="field">
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Name" />
+      </div>
+
+      <div class="ui buttons">
+        <input class="ui positive button" type="submit" id="save" value="Catch Pokémon" />
+      </div>
+
+    </form>
+    <h4 class="ui horizontal divider header inventory">
+      Inventory
+    </h4>
+
+    <div id="pokemon-container" class="ui cards">
+
+    </div>
+  </div>
+
+  <div class="library top-padding">
+    <h1 class="center-text">
+      Poké Library
+    </h1>
+    <div class="grid-container">
+      <div class="thumb-card grid-1">
+        <div class="thumbnail">
+          <img src="https://img.pokemondb.net/artwork/pikachu.jpg">
+        </div>
+        <div>
+          <meta>#001</meta>
+          <div class="h2">Pikachu</div>
+          <div>
+            <a class="type-icon type-grass">Grass</a>
+            <a class="type-icon type-poison">Poison</a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class='inline'>
+          <i id="spacing" class="angle double left icon"></i>
+          <div class="type-icon">All</div>
+          <i id="spacing" class="angle double right icon"></i>
+        </div>
+
+        <div class="grid2-container">
+          <div class="grid-item">
+            <span>1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
