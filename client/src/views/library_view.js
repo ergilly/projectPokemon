@@ -24,6 +24,7 @@ class LibView {
         promiseArray.push(promise);
       });
       Promise.all(promiseArray).then((data) => {
+        // For every pokemon from external API i am taking their name and sprite to populate the library
         data.forEach((poke, i) => {
           const newSprite = document.createElement('img')
           newSprite.src = `../images/sprite/${i+1}.png`;
@@ -33,21 +34,22 @@ class LibView {
           const grid = document.querySelector('#grid2-container');
           grid.appendChild(newSprite);
         });
-
-
       }).then(() => {
         const libPokemon = new LibPokemon();
         libPokemon.getData();
       });
-
       PubSub.subscribe('LibPokemon:all-stats-ready', (evt) => {
         const pokemonInfo = evt.detail[1];
         const pokemonStat = evt.detail[0]
         this.renderPokemon(pokemonInfo, pokemonStat);
+        console.log(pokemonInfo.length);
+        if (pokemonInfo.length == 151) {
+          const cont = document.querySelector('.have-pokemon')
+          const haveAllPokemon = document.createElement('h2');
+          haveAllPokemon.textContent = "CONGRATULATIONS!!!! You Caught Them All!!!";
+          cont.appendChild(haveAllPokemon);
+        }
       })
-
-
-
     });
   };
 
@@ -55,7 +57,8 @@ class LibView {
 
   renderPokemon(pokemon, stats) {
     this.clearPokemon()
-
+    //goes through every pokemon in the users library and calls the lightUpPoke function.
+    console.log(pokemon);
     pokemon.forEach((pokemon) => {
       stats.forEach((poke, i) => {
         if (pokemon.natno == poke.owner) {
@@ -69,20 +72,22 @@ class LibView {
 
 
   lightUpPoke(pokemon) {
+
+    // Highlights the specified pokemon in library
     const natno = pokemon.natno.slice(1);
     const num = (parseInt(natno)) - 1;
     const grid = document.querySelector(`.grid-item-${num}`)
     var _self = this;
 
+    //adds an event listener on each grid item that the user owns the pokemon of to display further info
     grid.addEventListener('click', function onClick() {
         _self.displayPoke(pokemon);
         grid.removeEventListener('click', onClick)
     });
-
     grid.classList.remove('opaque');
 
   }
-
+  // clears highlight of all pokemon in container
   clearPokemon() {
     for (var i = 0; i < this.pokemonData.length; i++) {
       const element = document.querySelector(`.grid-item-${i}`)
@@ -91,6 +96,8 @@ class LibView {
   }
 
   displayPoke(pokemon) {
+
+    //create thumbnail container
     const container = document.querySelector("#grid-1");
     container.innerHTML = '';
     const name = pokemon.name.toLowerCase();
@@ -99,6 +106,7 @@ class LibView {
     const imgcont = document.createElement('div');
     imgcont.classList.add('imgcont');
 
+    //add image to thumbnail container
     const image = document.createElement('img');
     image.id = 'lib-img';
     image.src = `./images/splash/${name}.jpg`
@@ -107,16 +115,19 @@ class LibView {
     thumb.appendChild(imgcont);
     container.appendChild(thumb);
 
+    //add pokemon name to container
     const info = document.createElement('div');
     info.id = 'info'
     const title = document.createElement('div');
     title.classList.add('h2');
     title.textContent = pokemon.name;
 
+    //add pokemon's current lvl to the container
     const level = document.createElement('p');
     level.id = 'image-card'
     level.textContent = `Lvl ${pokemon.stats.level}`;
 
+    //add the pokemons types to the container
     const displayTypes = document.createElement('div');
     const types = pokemon.types.split('-');
     const type1 = types[0];
@@ -127,22 +138,27 @@ class LibView {
       displayTypes.innerHTML = `<span class='type-icon type-${type1.toLowerCase()}'>${type1}</span><span class='type-icon type-${type2.toLowerCase()}'>${type2}</span>`;
     }
 
+    //add a button to withdraw a pokemon to my inventory
     const withdraw = document.createElement('button');
     withdraw.id = 'withdraw-button'
     withdraw.classList.add('yellow', 'ui', 'button');
     withdraw.textContent = 'Withdraw'
     withdraw.addEventListener('click', (evt) => {
 
+      //limit number of pokemon in inventory to 6
       const inv = document.querySelector('#pokemon-container');
       if ((inv.getElementsByTagName("div").length/10) < 6) {
         container.innerHTML = '';
 
+        // add pokemon to inventory
         const inventory = new InvPokemon();
         inventory.postPokemon(pokemon, pokemon.stats);
 
+        // remove pokemon from library
         const libPokemon = new LibPokemon();
         libPokemon.deletePokemon(pokemon.id);
 
+        // remove highlight from pokemon thats withdrawn
         const natno = pokemon.natno.slice(1);
         const num = (parseInt(natno)) - 1;
         const grid = document.querySelector(`.grid-item-${num}`)

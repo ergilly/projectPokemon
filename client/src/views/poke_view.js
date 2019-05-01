@@ -7,10 +7,15 @@ class PokeView {
   }
 
   renderView(pokemon, data) {
+    //clear the container
     this.clearView();
+    //render the image of the pokemon, along with it's name and current level
     this.renderPic(pokemon);
+    //render information on the pokemon including: nat No., types, height, weight and abilities
     this.renderData(pokemon);
+    //render the pokemons stats
     this.renderStats(pokemon);
+    //render the pokemon's evolution data
     const evoData = document.querySelector('#evolution-data');
     const evoView = new EvoView(evoData);
     evoView.renderView(pokemon, data);

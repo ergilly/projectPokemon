@@ -123,14 +123,14 @@ td {
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 300px;
   border: 1px solid #d5d5d5;
+  border-radius: .3rem;
+  margin-bottom: 20px;
 }
 
 #evolution-grid {
   display: inline-grid;
   grid-auto-columns: 150px;
-  border-radius: .3rem;
   grid-auto-columns: 150px;
 }
 
@@ -139,12 +139,58 @@ td {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  grid-row: 1/2;
 }
 
 #arrow-img {
   max-width: 50px
 }
+
+#h3 {
+  font-size: 18px;
+}
+
+.grid-row-1 {
+  grid-row: 1/2;
+}
+.grid-row-2 {
+  grid-row: 2/3;
+}
+.grid-row-3 {
+  grid-row: 3/4;
+}
+.grid-row-4 {
+  grid-row: 4/5;
+}
+.grid-row-5 {
+  grid-row: 5/6;
+}
+.grid-row-7 {
+  grid-row: 7/8;
+}
+.grid-row-8 {
+  grid-row: 8/9;
+}
+.grid-row-9 {
+  grid-row: 9/10;
+}
+
+.grid-column-1 {
+  grid-column: 1/2;
+  grid-row: 1/-1;
+}
+.grid-column-2 {
+  grid-column: 2/3;
+}
+.grid-column-3 {
+  grid-column: 3/4;
+}
+.grid-column-4 {
+  grid-column: 4/5;
+}
+.grid-column-5 {
+  grid-column: 5/6;
+}
+
 
 .evolution-tiles {
   width: 150px;
@@ -152,8 +198,6 @@ td {
   display: flex;
   flex-direction: column;
   align-items: center;
-  grid-row: 1/2;
-
 }
 
 .sprite-size {
@@ -234,9 +278,7 @@ td {
   font-size: 20px;
 }
 
-#h3 {
-  font-size: 18px;
-}
+
 
 .center-text {
   text-align: center;
