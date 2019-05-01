@@ -31,7 +31,8 @@ class PokeView {
 
     const picture = document.createElement('img');
     const name = pokemon.name.toLowerCase();
-    picture.src = `https://img.pokemondb.net/artwork/${name}.jpg`;
+    picture.src = `./images/splash/${name}.jpg`
+    picture.alt = `https://img.pokemondb.net/artwork/${name}.jpg`;
     picture.classList.add('image');
 
     const description = document.createElement('div');

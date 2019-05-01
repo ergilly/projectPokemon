@@ -27,6 +27,7 @@ class LibView {
         data.forEach((poke, i) => {
           const newSprite = document.createElement('img')
           newSprite.src = `../images/sprite/${i+1}.png`;
+          newSprite.alt = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png`
           newSprite.id = 'grid-item'
           newSprite.classList.add('opaque', `grid-item-${i}`);
           const grid = document.querySelector('#grid2-container');
@@ -100,7 +101,8 @@ class LibView {
 
     const image = document.createElement('img');
     image.id = 'lib-img';
-    image.src = `https://img.pokemondb.net/artwork/${name}.jpg`
+    image.src = `./images/splash/${name}.jpg`
+    image.alt = `https://img.pokemondb.net/artwork/${name}.jpg`
     imgcont.appendChild(image);
     thumb.appendChild(imgcont);
     container.appendChild(thumb);

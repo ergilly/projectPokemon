@@ -70,7 +70,8 @@ class InventoryView {
 
     const sprite = document.createElement('img');
     const urlInput = pokemon.name.toLowerCase();
-    sprite.src = `https://img.pokemondb.net/artwork/${urlInput}.jpg`;
+    sprite.src = `./images/splash/${urlInput}.jpg`;
+    sprite.alt = `https://img.pokemondb.net/artwork/${urlInput}.jpg`
     sprite.classList.add('right', 'floated', 'pic-size', 'ui', 'image');
 
     const content = document.createElement('div');
@@ -121,13 +122,13 @@ class InventoryView {
         const invPokemon = new InvPokemon();
         invPokemon.putStats(updatedStats, pokeId);
 
-        const pokedexData = document.querySelector('#pokedex-data');
-        const pokeView = new PokeView(pokedexData);
-        pokeView.renderView(pokemon);
+        this.updatePokedex(updatedStats, pokemon);
       }
 
 
     });
+
+
 
     const store = document.createElement('div');
     store.classList.add('ui', 'yellow', 'button');
@@ -156,6 +157,13 @@ class InventoryView {
     card.appendChild(content);
     card.appendChild(extraContent);
     return card;
+  }
+
+  updatePokedex(updatedStats, pokemon) {
+    const pokedexData = document.querySelector('#pokedex-data');
+    const pokeView = new PokeView(pokedexData);
+    pokemon.stats = updatedStats;
+    pokeView.renderView(pokemon, this.data);
   }
 }
 module.exports = InventoryView;
