@@ -8,6 +8,8 @@ const cors = require('cors');
 var indexRouter = require('./routes/index');
 var pokemonRouter = require('./routes/pokemon');
 const statsRouter = require('./routes/stats');
+var libPokemonRouter = require('./routes/libpokemon');
+const libStatsRouter = require('./routes/libstats');
 
 var app = express();
 
@@ -22,5 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/pokemon', pokemonRouter);
 app.use('/stats', statsRouter);
+app.use('/libpokemon', libPokemonRouter);
+app.use('/libstats', libStatsRouter);
 
 module.exports = app;

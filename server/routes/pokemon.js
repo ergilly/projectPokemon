@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 
 // Make new pokemon. CREATE
 router.post('/', function(req, res) {
-  SqlRunner.run("INSERT INTO pokemon (natNo, name, types, height, weight) VALUES ($1, $2, $3, $4, $5)", [req.body.natNo, req.body.name, req.body.types, req.body.height, req.body.weight]).then(result => {
+  SqlRunner.run("INSERT INTO pokemon (natno, name, types, height, weight, abilities) VALUES ($1, $2, $3, $4, $5, $6)", [req.body.natno, req.body.name, req.body.types, req.body.height, req.body.weight, req.body.abilities]).then(result => {
     SqlRunner.run("SELECT * FROM pokemon ORDER BY id ASC")
       .then((result) => {
         res.status(201).json(result.rows);
@@ -30,7 +30,7 @@ router.get('/:id', function(req, res) {
 
 // update pokemon information. UPDATE
 router.put('/:id', function(req, res) {
-  SqlRunner.run("UPDATE pokemon SET natNo = $1, name = $2, types = $3, height = $4, weight = $5 WHERE id = $6", [req.body.natNo, req.body.name, req.body.types, req.body.height, req.body.weight, req.params.id]).then(result => {
+  SqlRunner.run("UPDATE pokemon SET natNo = $1, name = $2, types = $3, height = $4, weight = $5, abilities = $6, WHERE id = $7", [req.body.natNo, req.body.name, req.body.types, req.body.height, req.body.weight, req.body.abilities, req.params.id]).then(result => {
     SqlRunner.run("SELECT * FROM pokemon ORDER BY id ASC")
       .then((result) => {
         res.status(201).json(result.rows);

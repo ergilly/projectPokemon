@@ -1,7 +1,7 @@
 const PubSub = require('../helpers/pub_sub.js');
 const RequestHelper = require('../helpers/request_helper.js');
 
-class InvPokemon {
+class LibPokemon {
   constructor(data) {
     this.data = {}
     this.stats
@@ -9,43 +9,44 @@ class InvPokemon {
   }
 
   getData() {
-    const url = 'http://localhost:3000/pokemon';
+    const url = 'http://localhost:3000/libpokemon';
     const requestHelper = new RequestHelper(url);
     requestHelper.get().then((data) => {
       this.data = data;
-      PubSub.publish('InvPokemon:all-pokemon-ready', data);
+      // PubSub.publish('LibPokemon:all-pokemon-ready', data);
     }).then(() => {
       this.getStats();
     })
   }
 
   getStats() {
-    const url = 'http://localhost:3000/stats';
+    const url = 'http://localhost:3000/libstats';
     const requestHelper = new RequestHelper(url);
     requestHelper.get().then((data) => {
       this.stats = data;
-      PubSub.publish('InvPokemon:all-stats-ready', data);
+      const info = [data, this.data]
+      PubSub.publish('LibPokemon:all-stats-ready', info);
     })
   }
 
 
   getPokemon() {
-    PubSub.subscribe('Pokemon:url-ready', (evt) => {
+    PubSub.subscribe('LibPokemon:url-ready', (evt) => {
       let url = evt.detail;
       const getPokemon = new RequestHelper(url);
       getPokemon.get().then((data) => {
         this.pokemonData = data;
-        PubSub.publish('InvPokemon:specific-pokemon-ready', data)
+        PubSub.publish('LibPokemon:specific-pokemon-ready', data)
       })
     })
   }
 
   postPokemon(poke, stats) {
-    const url = `http://localhost:3000/pokemon`;
+    const url = `http://localhost:3000/libpokemon`;
     const request = new RequestHelper(url);
     request.post(poke)
       .then(() => {
-        request.url = `http://localhost:3000/stats`
+        request.url = `http://localhost:3000/libstats`
         request.post(stats)
           .then(() => {
         this.getData();
@@ -58,10 +59,10 @@ class InvPokemon {
 
 
   deletePokemon(pokeId) {
-    const url = `http://localhost:3000/stats/${pokeId}`;
+    const url = `http://localhost:3000/libstats/${pokeId}`;
     const request = new RequestHelper(url);
     request.delete(pokeId)
-    request.url = `http://localhost:3000/pokemon/${pokeId}`;
+    request.url = `http://localhost:3000/libpokemon/${pokeId}`;
     request.delete(pokeId)
       .then(() => {
         this.getData();
@@ -71,11 +72,11 @@ class InvPokemon {
   }
 
   putStats(stats, pokeId) {
-    const url = `http://localhost:3000/stats/${pokeId}`;
+    const url = `http://localhost:3000/libstats/${pokeId}`;
     const request = new RequestHelper(url);
     request.put(stats)
       .then((pokemon) => {
-        PubSub.publish('InvPokemon:all-stats-ready', pokemon);
+        PubSub.publish('LibPokemon:all-stats-ready', pokemon);
       })
       .catch(console.error);
   }
@@ -83,4 +84,4 @@ class InvPokemon {
 }
 
 
-module.exports = InvPokemon;
+module.exports = LibPokemon;

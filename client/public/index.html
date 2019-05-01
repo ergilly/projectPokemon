@@ -10,7 +10,7 @@
 </head>
 
 <body>
-  <div class="ui container left-padding top-padding">
+  <div id='left-container' class="ui container left-padding top-padding">
     <h1>Pokémon</h1>
     <form class="ui form" id="pokemon-form">
 
@@ -23,45 +23,44 @@
         <input class="ui positive button" type="submit" id="save" value="Catch Pokémon" />
       </div>
 
+      <div class="have-pokemon">
+
+      </div>
+
     </form>
-    <h4 class="ui horizontal divider header inventory">
+
+    <h3 class="ui horizontal divider header inventory">
+      <img src="../images/pokeball.png" alt="pokeball img" />
       Inventory
-    </h4>
+    </h3>
 
-    <div id="pokemon-container" class="ui cards">
+    <div id="pokemon-container" class="ui cards"></div>
 
-    </div>
+    <h3 class="ui horizontal divider header poke-view">
+      Pokédex Data
+    </h3>
+
+    <div id="pokedex-data"></div>
+
+    <div id="evolution-data"></div>
+
   </div>
 
-  <div class="library top-padding">
+  <div id="library" class="top-padding">
     <h1 class="center-text">
       Poké Library
     </h1>
-    <div class="grid-container">
-      <div class="thumb-card grid-1">
-        <div class="thumbnail">
-          <img src="https://img.pokemondb.net/artwork/pikachu.jpg">
-        </div>
-        <div>
-          <meta>#001</meta>
-          <div class="h2">Pikachu</div>
-          <div>
-            <a class="type-icon type-grass">Grass</a>
-            <a class="type-icon type-poison">Poison</a>
-          </div>
-        </div>
-      </div>
-      <div class="grid-2">
+    <div id="grid-container">
+      <div id='grid-1' class="thumb-card"></div>
+      <div id="grid-2">
         <div class='inline'>
           <i id="spacing" class="angle double left icon"></i>
           <div class="type-icon">All</div>
           <i id="spacing" class="angle double right icon"></i>
         </div>
 
-        <div class="grid2-container">
-          <div class="grid-item">
-            <span>1</span>
-          </div>
+        <div id="grid2-container">
+
         </div>
       </div>
     </div>

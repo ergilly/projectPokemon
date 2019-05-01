@@ -4,7 +4,7 @@ const SqlRunner = require('../db/sql_runner.js');
 
 // GET users listing. READ
 router.get('/', function(req, res, next) {
-  SqlRunner.run("SELECT * FROM stats ORDER BY owner ASC").then(
+  SqlRunner.run("SELECT * FROM stats ORDER BY id ASC").then(
     result => {
       res.status(200).json(result.rows);
     });
@@ -12,8 +12,8 @@ router.get('/', function(req, res, next) {
 
 // Make new pokemon. CREATE
 router.post('/', function(req, res) {
-  SqlRunner.run("INSERT INTO stats (health, attack, defense, sp_attk, sp_def, speed, owner) VALUES ($1, $2, $3, $4, $5, $6, $7)", [req.body.health, req.body.attack, req.body.defense, req.body.sp_attk, req.body.sp_def, req.body.speed, req.body.owner]).then(result => {
-    SqlRunner.run("SELECT * FROM stats ORDER BY owner ASC")
+  SqlRunner.run("INSERT INTO stats (health, attack, defense, sp_attk, sp_def, speed, level, owner) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [req.body.health, req.body.attack, req.body.defense, req.body.sp_attk, req.body.sp_def, req.body.speed, req.body.level, req.body.owner]).then(result => {
+    SqlRunner.run("SELECT * FROM stats ORDER BY id ASC")
       .then((result) => {
         res.status(201).json(result.rows);
       });
@@ -30,8 +30,8 @@ router.get('/:id', function(req, res) {
 
 // update pokemon information. UPDATE
 router.put('/:id', function(req, res) {
-  SqlRunner.run("UPDATE stats SET health = $1, attack = $2, defense = $3, sp_attk = $4, sp_def = $5, speed = $6 WHERE id = $7", [req.body.health, req.body.attack, req.body.defense, req.body.sp_attk, req.body.sp_def, req.body.speed, req.params.id]).then(result => {
-    SqlRunner.run("SELECT * FROM stats ORDER BY owner ASC")
+  SqlRunner.run("UPDATE stats SET health = $1, attack = $2, defense = $3, sp_attk = $4, sp_def = $5, speed = $6, level = $7 WHERE id = $8", [req.body.health, req.body.attack, req.body.defense, req.body.sp_attk, req.body.sp_def, req.body.speed, req.body.level, req.params.id]).then(result => {
+    SqlRunner.run("SELECT * FROM stats ORDER BY id ASC")
       .then((result) => {
         res.status(201).json(result.rows);
       });

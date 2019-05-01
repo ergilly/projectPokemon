@@ -1,11 +1,148 @@
 body {
   display: grid;
-  grid-template-columns: 1fr 550px;
+  grid-template-columns: 1fr 720px;
   column-gap: 10px;
 }
-.library {
-  grid-column: 2/3
+th {
+  width: 40%;
+  text-align: right;
+  padding: 10px;
 }
+td {
+  width: 60%;
+  padding: 10px;
+}
+
+#library {
+  grid-column: 2/3;
+  height: 400px;
+}
+#grid-container {
+  width: 700px;
+  height: 400px;
+  margin-right: 20px;
+  display: grid;
+  grid-template-columns: 35% 65%;
+}
+#image-card {
+  margin: 0;
+}
+#stats-card {
+  margin: 0;
+  width: 100%;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#poke-info-card{
+  margin: 0;
+  width: 100%;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#padding {
+  padding: 10px;
+}
+#pokemon-form {
+  margin: 20px;
+}
+
+#pokedex-data {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: 25% 37.5% 37.5%;
+  margin-bottom: 20px;
+}
+
+#card-width {
+  width: 32%;
+}
+
+#withdraw-button {
+  width: 80%;
+}
+#spacing {
+  margin: 4px 0 0 0;
+}
+
+#grid-2 {
+  grid-column: 2/3;
+  max-height:400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 5px outset #ff4e4e;
+  border-top: 5px outset #ff4e4e;
+  border-bottom: 5px outset #ff4e4e;
+  border-left: 0px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 2px 2px 5px 0px #cbcbcb;
+  background-color: #ff6262;
+
+}
+#lib-img {
+  max-width: 100%;
+  max-height: 240px;
+  padding: 15px;
+
+}
+#grid2-container {
+  width: 90%;
+  height: 80%;
+  margin: 0px 20px 20px 20px;
+  display: grid;
+  grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+  grid-template-rows: 48.13px 48.13px 48.13px 48.13px 48.13px;
+  overflow: scroll;
+  border: 5px inset #ff4e4e;
+}
+
+#grid-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#grid-1 {
+  max-height:400px;
+  grid-column: 1/2;
+}
+
+#info {
+  height: 71.25;
+  margin-bottom: 5px;
+}
+
+#evolution-data {
+  width: 100%;
+  height: 300px;
+}
+
+#evolution-grid {
+  display: grid;
+  border: 1px solid #d5d5d5;
+  border-radius: .3rem;
+}
+
+.evolution-tiles {
+  width: 150px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sprite-size {
+  width: 150px;
+  height: 150px;
+}
+
 .left-padding{
   padding-left: 20px;
 }
@@ -13,20 +150,31 @@ body {
   padding-top: 20px;
 
 }
-.grid-container {
-  width: 530px;
-  height: 245px;
-  margin-right: 20px;
-  display: grid;
-  grid-template-columns: 35% 65%;
+
+.have-pokemon {
+  padding: 10px;
 }
+
+
+
+.image-cont {
+  display: flex;
+  justify-content: center;
+  max-height: 240px;
+}
+.image {
+  max-width: 100%;
+  max-height: 220px;
+}
+
+
 .inventory {
   margin: 20px;
 }
-#pokemon-form {
-  margin: 20px;
-}
 
+.pic-size {
+  height: 65px;
+}
 
 .thumb-card {
   display: flex;
@@ -42,83 +190,45 @@ body {
   background-color: #ff6262;
 }
 
-#spacing {
-  margin: 4px 0 0 0;
-}
-
 .inline {
   display: inline-flex;
   margin: 5px;
 }
 
-.grid-2 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-right: 5px outset #ff4e4e;
-  border-top: 5px outset #ff4e4e;
-  border-bottom: 5px outset #ff4e4e;
-  border-left: 0px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  box-shadow: 2px 2px 5px 0px #cbcbcb;
-  background-color: #ff6262;
+
+.imgcont {
+  width: 220px;
+  height: 254px;
+  border: 5px inset #ff4e4e;
+  background-color: white;
+  margin: 5px;
 
 }
 
 .thumbnail {
   width: 100%;
-  border-bottom: 1px solid #cbcbcb;
-
 }
 
-img {
-  max-width: 100%;
-  padding: 15px;
-
-}
 
 .h2 {
-  margin-top: 0px;
+  margin-top: 5px;
   font-weight: bold;
   font-size: 20px;
+}
+
+#h3 {
+  font-size: 18px;
 }
 
 .center-text {
   text-align: center;
 }
 
-
-.grid2-container {
-  width: 90%;
-  height: 80%;
-  margin: 0px 20px 20px 20px;
-  display: grid;
-  grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
-  grid-template-rows: 20% 20% 20% 20% 20%;
-  overflow: scroll;
-  border: 5px inset #ff4e4e;
+.opaque {
+  opacity: 0.5;
 }
 
-.grid-item {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.grid-1 {
-  grid-column: 1/2;
-}
-
-.grid-2 {
-  grid-column: 2/3;
-}
-
-.image {
-  margin: 5px;
-}
 .lib-title {
   width: 100px;
 }
