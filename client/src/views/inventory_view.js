@@ -83,6 +83,18 @@ class InventoryView {
     //make the card clickable to display further information from the PokeView view
     const content = document.createElement('div');
     content.classList.add("content");
+    if (types.length == 1) {
+      content.classList.add(`back-${types[0]}`);
+    } else {
+      console.log(pokemon.id);
+      const colour1 = this.createColour(types[0]);
+      const colour2 = this.createColour(types[1]);
+      const style = document.createElement('style');
+      style.innerHTML = `.gradient${pokemon.id} { background-image: linear-gradient(to right,${colour1},${colour2})!important; }`;
+      content.appendChild(style);
+
+      content.classList.add(`gradient${pokemon.id}`);
+    }
     content.value = pokemon;
     content.addEventListener('click', (evt) => {
       const pokedexData = document.querySelector('#pokedex-data');
@@ -123,7 +135,7 @@ class InventoryView {
     lvlUp.textContent = 'Lvl Up'
     lvlUp.value = [pokemon.stats.id, pokemon.stats.health, pokemon.stats.attack, pokemon.stats.defense, pokemon.stats.sp_attk, pokemon.stats.sp_def, pokemon.stats.speed, pokemon.stats.level];
     lvlUp.addEventListener('click', (evt) => {
-        //limit max level to 99
+      //limit max level to 99
       if (evt.target.value[7] < 100) {
         const pokeId = evt.target.value[0]
         //update the stats for each level increasing by 2%
@@ -189,6 +201,49 @@ class InventoryView {
     const pokeView = new PokeView(pokedexData);
     pokemon.stats = updatedStats;
     pokeView.renderView(pokemon, this.data);
+  }
+
+  createColour(type) {
+    console.log(type);
+    let colour = ''
+    if (type == 'normal') {
+      colour = 'rgba(170,170,153,0.5)'
+    } else if (type == 'fire') {
+      colour = 'rgba(255,68,34,0.5)'
+    } else if (type == 'water') {
+      colour = 'rgba(51,153,255,0.5)'
+    } else if (type == 'electric') {
+      colour = 'rgba(255,204,51,0.5)'
+    } else if (type == 'grass') {
+      colour = 'rgba(119,204,85,0.5)'
+    } else if (type == 'ice') {
+      colour = 'rgba(102,204,255,0.5)'
+    } else if (type == 'fighting') {
+      colour = 'rgba(187,85,68,0.5)'
+    } else if (type == 'poison') {
+      colour = 'rgba(170,85,153,0.5)'
+    } else if (type == 'ground') {
+      colour = 'rgba(221,187,85,0.5)'
+    } else if (type == 'flying') {
+      colour = 'rgba(136,153,255,0.5)'
+    } else if (type == 'psychic') {
+      colour = 'rgba(255,85,153,0.5)'
+    } else if (type == 'bug') {
+      colour = 'rgba(170,187,34,0.5)'
+    } else if (type == 'rock') {
+      colour = 'rgba(187,170,102,0.5)'
+    } else if (type == 'ghost') {
+      colour = 'rgba(102,102,187,0.5)'
+    } else if (type == 'dragon') {
+      colour = 'rgba(120,103,238,0.5)'
+    } else if (type == 'dark') {
+      colour = 'rgba(119,85,68,0.5)'
+    } else if (type == 'steel') {
+      colour = 'rgba(171,171,187,0.5)'
+    } else if (type == 'fairy') {
+      colour = 'rgba(238,154,238,0.5)'
+    }
+    return colour
   }
 }
 module.exports = InventoryView;

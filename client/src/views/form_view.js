@@ -10,11 +10,12 @@ class FormView {
   }
 
   bindEvents() {
+    //get information from external api for all pokemon
     PubSub.subscribe('Pokemon:all-pokemon-ready', (evt) => {
       const pokemonData = evt.detail.results;
       this.element.addEventListener('submit', (evt) => {
         evt.preventDefault();
-        const newPokemon = evt.target['name'].value;
+        const newPokemon = evt.target['name-input'].value;
         pokemonData.forEach((pokemon) => {
           if (pokemon.name == newPokemon.toLowerCase()) {
             const url = pokemon.url
@@ -26,11 +27,13 @@ class FormView {
 
     });
 
+    //subscribe to inventory pokemon
     PubSub.subscribe('InvPokemon:all-pokemon-ready', (event) => {
       const allPokemon = event.detail;
       this.data = allPokemon;
     })
 
+    //subscribe to library pokemon
     PubSub.subscribe('LibPokemon:all-stats-ready', (event) => {
       const allPokemon = event.detail;
       this.libData = allPokemon;
@@ -38,7 +41,9 @@ class FormView {
 
     PubSub.subscribe('Pokemon:specific-pokemon-ready', (evt) => {
       const data = evt.detail;
+      console.log(this.libData);
 
+      //Check against inventory and library to see if the user already has the pokemon
       const dontHaveInv = this.data.every((poke) => {
         let number = data.id;
         if (number < 10) {
@@ -55,7 +60,7 @@ class FormView {
           return true
         }
       })
-      const dontHaveLib = this.libData[1].every((poke) => {
+      const dontHaveLib = this.libData[0].every((poke) => {
         let number = data.id;
         if (number < 10) {
           number = '#00' + number;
@@ -65,14 +70,15 @@ class FormView {
           number = '#' + number;
         }
 
-        if (poke.natno == number) {
+        if (poke.owner == number) {
           return false
         } else {
           return true
         }
       })
 
-
+      //IF the user doesnt have the pokemon and the inventory has less than 6 pokemon, add new one to inventory
+      //IF the inventory already has 6, add the new one to the library
       if (dontHaveInv == true && dontHaveLib == true) {
         if (this.data.length < 6) {
           const newPokemon = this.newPokemon(data);
@@ -95,6 +101,7 @@ class FormView {
     })
   }
 
+  // extract data from external api and add it to internal database
   newPokemon(data) {
     const newPokemon = {};
     newPokemon.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
@@ -127,6 +134,7 @@ class FormView {
     return newPokemon;
   }
 
+  // get the pokemons stats from the external api and store them in the internal stats table
   newStats(data) {
     const newStats = {};
     newStats.health = data.stats[5].base_stat;

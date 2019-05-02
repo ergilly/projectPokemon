@@ -8,6 +8,7 @@ class Pokemon {
   }
 
   getData() {
+    // 151 = gen1, 493 = gen3
     const url = 'https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151';
     const requestHelper = new RequestHelper(url);
     requestHelper.get().then((data) => {
