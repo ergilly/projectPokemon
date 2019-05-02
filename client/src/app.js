@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const libContainer = document.querySelector('#library');
   const libView = new LibView(libContainer);
+  libView.createGrids()
   libView.bindEvents();
 
   const invPokemon = new InvPokemon();

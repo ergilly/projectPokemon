@@ -9,15 +9,15 @@ class LibView {
     this.container = container
     this.pokemonData = {}
     this.pokemonInfo;
-    this.types = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy"];
+    this.storedTypes = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy"];
   }
 
   bindEvents() {
     PubSub.subscribe('Pokemon:all-pokemon-ready', (evt) => {
       const pokemonData = evt.detail.results;
       const promiseArray = [];
-      pokemonData.forEach((pokemon) => {
 
+      pokemonData.forEach((pokemon) => {
         let url = pokemon.url;
         const getPokemon = new RequestHelper(url);
         const promise = getPokemon.get()
@@ -25,14 +25,19 @@ class LibView {
       });
       Promise.all(promiseArray).then((data) => {
         // For every pokemon from external API i am taking their name and sprite to populate the library
+        const allGrid = document.querySelector('#grid2-container')
         data.forEach((poke, i) => {
-          const newSprite = document.createElement('img')
-          newSprite.src = `../images/sprite/${i+1}.png`;
-          newSprite.alt = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png`
-          newSprite.id = 'grid-item'
-          newSprite.classList.add('opaque', `grid-item-${i}`);
-          const grid = document.querySelector('#grid2-container');
-          grid.appendChild(newSprite);
+
+
+          const newSprite = this.createSprite(i);
+
+          allGrid.appendChild(newSprite);
+
+          let pokeTypes = this.getPokeTypes(poke);
+
+          this.appendSpriteTypes(pokeTypes, newSprite);
+
+
         });
       }).then(() => {
         const libPokemon = new LibPokemon();
@@ -42,7 +47,6 @@ class LibView {
         const pokemonInfo = evt.detail[1];
         const pokemonStat = evt.detail[0]
         this.renderPokemon(pokemonInfo, pokemonStat);
-        console.log(pokemonInfo.length);
         if (pokemonInfo.length == 151) {
           const cont = document.querySelector('.have-pokemon')
           const haveAllPokemon = document.createElement('h2');
@@ -50,6 +54,7 @@ class LibView {
           cont.appendChild(haveAllPokemon);
         }
       })
+
     });
   };
 
@@ -58,7 +63,6 @@ class LibView {
   renderPokemon(pokemon, stats) {
     this.clearPokemon()
     //goes through every pokemon in the users library and calls the lightUpPoke function.
-    console.log(pokemon);
     pokemon.forEach((pokemon) => {
       stats.forEach((poke, i) => {
         if (pokemon.natno == poke.owner) {
@@ -173,6 +177,44 @@ class LibView {
     info.appendChild(withdraw);
     container.appendChild(info);
 
+  }
+
+  createGrids() {
+    const container = document.querySelector('#library-tabs');
+
+    this.storedTypes.forEach((type) => {
+      const grid = document.createElement('div');
+      grid.id = 'grid2-hidden'
+      grid.classList.add(`grid-${type}`);
+      container.appendChild(grid);
+    })
+  }
+
+  getPokeTypes(poke) {
+    let pokeTypes = []
+    for (let type of poke.types) {
+      pokeTypes.push(type.type.name);
+    }
+    return pokeTypes
+  }
+
+  appendSpriteTypes(pokeTypes, newSprite) {
+    this.storedTypes.forEach((type) => {
+      if (pokeTypes[0] == type || pokeTypes[1] == type) {
+        const gridType = document.querySelector(`.grid-${type}`);
+        // gridType.appendChild(newSprite);
+      }
+    })
+
+  }
+
+  createSprite(i) {
+    const newSprite = document.createElement('img')
+    newSprite.src = `../images/sprite/${i+1}.png`;
+    newSprite.alt = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png`
+    newSprite.id = 'grid-item'
+    newSprite.classList.add('opaque', `grid-item-${i}`);
+    return newSprite;
   }
 }
 

@@ -86,7 +86,6 @@ class InventoryView {
     if (types.length == 1) {
       content.classList.add(`back-${types[0]}`);
     } else {
-      console.log(pokemon.id);
       const colour1 = this.createColour(types[0]);
       const colour2 = this.createColour(types[1]);
       const style = document.createElement('style');
@@ -204,7 +203,6 @@ class InventoryView {
   }
 
   createColour(type) {
-    console.log(type);
     let colour = ''
     if (type == 'normal') {
       colour = 'rgba(170,170,153,0.5)'
