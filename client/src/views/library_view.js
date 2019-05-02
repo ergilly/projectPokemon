@@ -3,6 +3,7 @@ const Pokemon = require('../models/pokemon.js');
 const RequestHelper = require('../helpers/request_helper.js');
 const LibPokemon = require('../models/lib_pokemon.js');
 const InvPokemon = require('../models/inv_pokemon.js');
+const LibTabs = require('./library_tabs.js');
 
 class LibView {
   constructor(container) {
@@ -35,7 +36,7 @@ class LibView {
 
           let pokeTypes = this.getPokeTypes(poke);
 
-          this.appendSpriteTypes(pokeTypes, newSprite);
+          this.appendSpriteTypes(pokeTypes, newSprite, i);
 
 
         });
@@ -53,7 +54,18 @@ class LibView {
           haveAllPokemon.textContent = "CONGRATULATIONS!!!! You Caught Them All!!!";
           cont.appendChild(haveAllPokemon);
         }
+
+        const libTabs = new LibTabs;
+        const rightArrow = document.querySelector('.right-arrow')
+        rightArrow.addEventListener('click', (evt) => {
+          libTabs.rightArrow(pokemonInfo);
+        })
+        const leftArrow = document.querySelector('.left-arrow')
+        leftArrow.addEventListener('click', (evt) => {
+          libTabs.leftArrow(pokemonInfo);
+        })
       })
+
 
     });
   };
@@ -198,11 +210,13 @@ class LibView {
     return pokeTypes
   }
 
-  appendSpriteTypes(pokeTypes, newSprite) {
+  appendSpriteTypes(pokeTypes, newSprite, i) {
     this.storedTypes.forEach((type) => {
+      const typeSprite = this.createSprite(i);
+
       if (pokeTypes[0] == type || pokeTypes[1] == type) {
         const gridType = document.querySelector(`.grid-${type}`);
-        // gridType.appendChild(newSprite);
+        gridType.appendChild(typeSprite);
       }
     })
 
@@ -210,7 +224,7 @@ class LibView {
 
   createSprite(i) {
     const newSprite = document.createElement('img')
-    newSprite.src = `../images/sprite/${i+1}.png`;
+    newSprite.src = `/images/sprite/${i+1}.png`;
     newSprite.alt = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${i+1}.png`
     newSprite.id = 'grid-item'
     newSprite.classList.add('opaque', `grid-item-${i}`);
